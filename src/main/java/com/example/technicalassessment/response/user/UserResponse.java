@@ -14,6 +14,8 @@ public class UserResponse {
 
     private String email;
 
+    private String gender;
+
     private String phone;
 
     private String province;

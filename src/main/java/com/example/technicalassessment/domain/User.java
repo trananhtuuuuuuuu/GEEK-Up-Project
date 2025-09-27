@@ -21,11 +21,9 @@ public class User {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @Email
     private String email;
-
     private String password;
+    private String gender;
     private String phone;
     private String province;
     private String district;
@@ -46,6 +44,7 @@ public class User {
     public User(String name,
                 String email,
                 String password,
+                String gender,
                 String phone,
                 String province,
                 String district,
@@ -55,6 +54,7 @@ public class User {
         this.name  = name;
         this.email = email;
         this.password = password;
+        this.gender = gender;
         this.phone = phone;
         this.province = province;
         this.district = district;

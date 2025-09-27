@@ -47,14 +47,15 @@ public class RegistrationController {
         User user = this.userService.registrationUser(this.userMapper.toModel(userDTO));
 
         UserResponse userResponse = new UserResponse(
-                registrationRequest.getName(),
-                registrationRequest.getEmail(),
-                registrationRequest.getPhone(),
-                registrationRequest.getProvince(),
-                registrationRequest.getDistrict(),
-                registrationRequest.getCommune(),
-                registrationRequest.getAddress(),
-                registrationRequest.getHousingType()
+                user.getName(),
+                user.getEmail(),
+                user.getGender(),
+                user.getPhone(),
+                user.getProvince(),
+                user.getDistrict(),
+                user.getCommune(),
+                user.getAddress(),
+                user.getHousingType()
         );
 
         apiResponse.setStatus(HttpStatus.CREATED.value());
