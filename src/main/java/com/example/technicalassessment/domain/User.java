@@ -23,10 +23,33 @@ public class User {
 
     @Email
     private String email;
+
+    private String password;
     private String phone;
     private String province;
     private String district;
     private String commune;
     private String address;
     private String housingType;
+
+    public User(String name,
+                String email,
+                String password,
+                String phone,
+                String province,
+                String district,
+                String commune,
+                String address,
+                String housingType) {
+        this.name  = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.province = province;
+        this.district = district;
+        this.commune = commune;
+        this.address = address;
+        this.housingType = housingType;
+
+    }
 }
