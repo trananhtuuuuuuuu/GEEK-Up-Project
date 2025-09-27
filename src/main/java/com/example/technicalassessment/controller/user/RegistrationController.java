@@ -8,7 +8,7 @@ import com.example.technicalassessment.request.RegistrationRequest;
 import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.mapper.user.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
-import com.example.technicalassessment.service.UserService;
+import com.example.technicalassessment.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

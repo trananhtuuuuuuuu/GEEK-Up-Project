@@ -10,6 +10,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO {
+    private String name;
+
     private String email;
-    private String password;
+
+    private String gender;
+
+    private String phone;
+
+    private String province;
+
+    private String district;
+
+    private String commune;
+
+    private String address;
+
+    private String housingType;
+
+    private String role;
 }
