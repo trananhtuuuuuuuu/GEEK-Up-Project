@@ -12,34 +12,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistrationDTO {
-    @NotBlank(message = "Name is required")
-    @Size(min=1)
+public class UserDTO {
     private String name;
-
-    @Email
-    @NotBlank(message = "Email is required")
     private String email;
-
-    @NotBlank(message = "Password is required")
     private String password;
-
-    @NotBlank(message = "Phone is required")
-    @Size(min=10)
     private String phone;
-
-    @NotBlank(message = "Province is required")
     private String province;
-
-    @NotBlank(message = "District required")
     private String district;
-
-    @NotBlank(message = "Commune is required")
     private String commune;
-
-    @NotBlank(message = "Address is required")
     private String address;
-
-    @NotBlank(message = "HousingType is required")
     private String housingType;
 }

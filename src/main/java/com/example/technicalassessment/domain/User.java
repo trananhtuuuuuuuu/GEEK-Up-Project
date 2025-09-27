@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -31,6 +32,16 @@ public class User {
     private String commune;
     private String address;
     private String housingType;
+
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
     public User(String name,
                 String email,

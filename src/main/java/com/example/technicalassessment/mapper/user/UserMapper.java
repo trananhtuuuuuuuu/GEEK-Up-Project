@@ -1,28 +1,45 @@
 package com.example.technicalassessment.mapper.user;
 
 import com.example.technicalassessment.domain.User;
-import com.example.technicalassessment.dto.user.RegistrationDTO;
-import jakarta.validation.constraints.Email;
+import com.example.technicalassessment.dto.user.UserDTO;
+import com.example.technicalassessment.request.RegistrationRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-    public User toModel(RegistrationDTO registrationDTO) {
+    public User toModel(UserDTO userDTO) {
         return new User(
-                registrationDTO.getName(),
-                registrationDTO.getEmail(),
-                registrationDTO.getPassword(),
-                registrationDTO.getPhone(),
-                registrationDTO.getProvince(),
-                registrationDTO.getDistrict(),
-                registrationDTO.getCommune(),
-                registrationDTO.getAddress(),
-                registrationDTO.getHousingType()
+                userDTO.getName(),
+                userDTO.getEmail(),
+                userDTO.getPassword(),
+                userDTO.getPhone(),
+                userDTO.getProvince(),
+                userDTO.getDistrict(),
+                userDTO.getCommune(),
+                userDTO.getAddress(),
+                userDTO.getHousingType()
         );
     }
 
-    public RegistrationDTO toDTO(User user) {
-        return new RegistrationDTO(
+
+    public UserDTO toDTO(RegistrationRequest registrationRequest) {
+        return new UserDTO(
+                registrationRequest.getName(),
+                registrationRequest.getEmail(),
+                registrationRequest.getPassword(),
+                registrationRequest.getPhone(),
+                registrationRequest.getProvince(),
+                registrationRequest.getDistrict(),
+                registrationRequest.getCommune(),
+                registrationRequest.getAddress(),
+                registrationRequest.getHousingType()
+        );
+    }
+
+
+
+    public UserDTO toDTO(User user) {
+        return new UserDTO(
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),

@@ -2,14 +2,14 @@ package com.example.technicalassessment.controller;
 
 
 import com.example.technicalassessment.domain.User;
-import com.example.technicalassessment.dto.user.RegistrationDTO;
-import com.example.technicalassessment.dto.user.UserResponse;
+import com.example.technicalassessment.dto.user.UserDTO;
+import com.example.technicalassessment.request.RegistrationRequest;
+import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.mapper.user.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,24 +35,26 @@ public class RegistrationController {
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse> registrationUser(@Valid @RequestBody RegistrationDTO registrationDTO) {
+    public ResponseEntity<ApiResponse> registrationUser(@Valid @RequestBody RegistrationRequest registrationRequest) {
 
         ApiResponse apiResponse = new ApiResponse();
 
-        String hashPassword = this.bCryptPasswordEncoder.encode(registrationDTO.getPassword());
-        registrationDTO.setPassword(hashPassword);
+        String hashPassword = this.bCryptPasswordEncoder.encode(registrationRequest.getPassword());
+        registrationRequest.setPassword(hashPassword);
 
-        User user = this.userService.saveUser(this.userMapper.toModel(registrationDTO));
+        UserDTO userDTO = this.userMapper.toDTO(registrationRequest);
+
+        User user = this.userService.registrationUser(this.userMapper.toModel(userDTO));
 
         UserResponse userResponse = new UserResponse(
-                registrationDTO.getName(),
-                registrationDTO.getEmail(),
-                registrationDTO.getPhone(),
-                registrationDTO.getProvince(),
-                registrationDTO.getDistrict(),
-                registrationDTO.getCommune(),
-                registrationDTO.getAddress(),
-                registrationDTO.getHousingType()
+                registrationRequest.getName(),
+                registrationRequest.getEmail(),
+                registrationRequest.getPhone(),
+                registrationRequest.getProvince(),
+                registrationRequest.getDistrict(),
+                registrationRequest.getCommune(),
+                registrationRequest.getAddress(),
+                registrationRequest.getHousingType()
         );
 
         apiResponse.setStatus(HttpStatus.CREATED.value());
