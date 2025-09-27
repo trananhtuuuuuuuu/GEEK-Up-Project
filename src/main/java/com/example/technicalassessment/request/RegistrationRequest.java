@@ -45,4 +45,6 @@ public class RegistrationRequest {
 
     @NotBlank(message = "HousingType is required")
     private String housingType;
+
+    private String role;
 }

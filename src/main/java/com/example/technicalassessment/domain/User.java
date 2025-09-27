@@ -31,8 +31,7 @@ public class User {
     private String address;
     private String housingType;
 
-    @ManyToOne
-    @JoinColumn(name="role_id")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy = "user")

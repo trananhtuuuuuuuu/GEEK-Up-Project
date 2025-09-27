@@ -27,4 +27,6 @@ public class UserResponse {
     private String address;
 
     private String housingType;
+
+    private String role;
 }

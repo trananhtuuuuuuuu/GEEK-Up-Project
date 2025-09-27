@@ -34,7 +34,8 @@ public class UserMapper {
                 registrationRequest.getDistrict(),
                 registrationRequest.getCommune(),
                 registrationRequest.getAddress(),
-                registrationRequest.getHousingType()
+                registrationRequest.getHousingType(),
+                registrationRequest.getRole()
         );
     }
 
@@ -51,7 +52,8 @@ public class UserMapper {
                 user.getDistrict(),
                 user.getCommune(),
                 user.getAddress(),
-                user.getHousingType()
+                user.getHousingType(),
+                user.getRole().name()
         );
     }
 }

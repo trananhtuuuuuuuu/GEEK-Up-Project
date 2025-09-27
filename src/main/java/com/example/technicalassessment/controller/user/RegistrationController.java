@@ -1,6 +1,7 @@
 package com.example.technicalassessment.controller.user;
 
 
+import com.example.technicalassessment.domain.Role;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
 import com.example.technicalassessment.request.RegistrationRequest;
@@ -44,7 +45,16 @@ public class RegistrationController {
 
         UserDTO userDTO = this.userMapper.toDTO(registrationRequest);
 
-        User user = this.userService.registrationUser(this.userMapper.toModel(userDTO));
+        User user = this.userMapper.toModel(userDTO);
+
+        if(registrationRequest.getRole() == null) {
+            user.setRole(Role.CUSTOMER);
+        }
+        else{
+            user.setRole(Role.valueOf(registrationRequest.getRole().toUpperCase()));
+        }
+
+        user = this.userService.registrationUser(user);
 
         UserResponse userResponse = new UserResponse(
                 user.getName(),
@@ -55,7 +65,8 @@ public class RegistrationController {
                 user.getDistrict(),
                 user.getCommune(),
                 user.getAddress(),
-                user.getHousingType()
+                user.getHousingType(),
+                user.getRole().name()
         );
 
         apiResponse.setStatus(HttpStatus.CREATED.value());
