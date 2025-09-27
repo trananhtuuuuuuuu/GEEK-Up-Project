@@ -1,6 +1,5 @@
-package com.example.technicalassessment.controller;
+package com.example.technicalassessment.controller.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

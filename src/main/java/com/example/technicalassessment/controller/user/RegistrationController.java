@@ -1,4 +1,4 @@
-package com.example.technicalassessment.controller;
+package com.example.technicalassessment.controller.user;
 
 
 import com.example.technicalassessment.domain.User;
