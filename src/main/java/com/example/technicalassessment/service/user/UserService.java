@@ -7,6 +7,7 @@ import com.example.technicalassessment.dto.ResultPaginationDTO;
 import com.example.technicalassessment.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +31,9 @@ public class UserService {
         );
     }
 
-    public ResultPaginationDTO getAllUsers(Pageable pageable) {
-        Page<User> users = this.userRepository.findAll(pageable);
+    public ResultPaginationDTO getAllUsers(Specification<User> specification, Pageable pageable) {
+
+        Page<User> users = this.userRepository.findAll(specification, pageable);
 
         ResultPaginationDTO resultPaginationDTO = new ResultPaginationDTO();
         Meta mt = new Meta();
@@ -45,6 +47,24 @@ public class UserService {
         resultPaginationDTO.setResult(users.getContent());
 
         return resultPaginationDTO;
+    }
+
+    public User getUserById(Long id) {
+        return this.userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User with id " + id + " not found")
+        );
+    }
+
+    public User updateUserById(Long id, User user) {
+        return null;
+    }
+
+
+    public void deleteUserById(Long id) {
+        User user = this.userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User with id " + id + " not found")
+        );
+        this.userRepository.deleteById(id);
     }
 
 

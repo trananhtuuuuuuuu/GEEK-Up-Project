@@ -6,14 +6,13 @@ import com.example.technicalassessment.mapper.user.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.service.user.UserService;
+import com.turkraft.springfilter.boot.Filter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,39 +32,15 @@ public class AdminController {
         //this.userMapper = userMapper;
     }
 
+
+
     @GetMapping("/users")
-    public ResponseEntity<ApiResponse> getAllUsers(@RequestParam("current") Optional<String> currentOptional,
-                                                   @RequestParam("pageSize") Optional<String> pageSizeOptional
-    ) {
-
-        String currentPage = currentOptional.orElse("");
-        String pageSize = pageSizeOptional.orElse("");
-
-        Pageable pageable = PageRequest.of(Integer.parseInt(currentPage) - 1, Integer.parseInt(pageSize));
-
+    public ResponseEntity<ApiResponse> getAllUsers(@Filter Specification<User> specification,
+                                                   Pageable pageable)
+    {
         ApiResponse apiResponse = new ApiResponse();
-        //List<User> users = new ArrayList<>();
 
-        //users = this.userService.getAllUsers(pageable);
-
-        ResultPaginationDTO resultPaginationDTO = this.userService.getAllUsers(pageable);
-
-//        List<UserResponse>  userResponses = new ArrayList<>();
-//
-//        for (User user : users) {
-//            userResponses.add(new UserResponse(
-//                    user.getName(),
-//                    user.getEmail(),
-//                    user.getGender(),
-//                    user.getPhone(),
-//                    user.getProvince(),
-//                    user.getDistrict(),
-//                    user.getCommune(),
-//                    user.getAddress(),
-//                    user.getHousingType(),
-//                    user.getRole().name()
-//            ));
-//        }
+        ResultPaginationDTO resultPaginationDTO = this.userService.getAllUsers(specification, pageable);
 
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -73,4 +48,20 @@ public class AdminController {
 
         return ResponseEntity.ok(apiResponse);
     }
+
+
+    @DeleteMapping("/users")
+    public ResponseEntity<ApiResponse> deleteUsersById(@RequestParam Long id){
+        ApiResponse apiResponse = new ApiResponse();
+        this.userService.deleteUserById(id);
+        apiResponse.setMetadata("Successfully");
+        apiResponse.setStatus(HttpStatus.ACCEPTED.value());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(apiResponse);
+    }
+
+
+
+
+
+
 }
