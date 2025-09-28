@@ -1,6 +1,8 @@
 package com.example.technicalassessment.controller.user;
 
 
+import com.example.technicalassessment.Exception.IdInvalidException;
+import com.example.technicalassessment.Exception.UserNotFoundException;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.LoginDTO;
 import com.example.technicalassessment.request.LoginRequest;
@@ -18,6 +20,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Security;
@@ -51,22 +54,20 @@ public class AuthenticationController {
                         loginRequest.getPassword()
         );
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//        //create access token
-//        String access_token = this.securityUtil.createAccessToken(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         LoginResponse loginResponse = new LoginResponse();
-        //loginResponse.setToken(access_token);
         LoginDTO loginDTO = new LoginDTO();
-
-        loginDTO.setEmail(loginRequest.getEmail());
-        loginDTO.setId(this.userService.getUserByEmail(loginRequest.getEmail()).getId());
-        loginDTO.setName(this.userService.getUserByEmail(loginRequest.getEmail()).getName());
+        User userFromDB = userService.getUserByEmail(loginRequest.getEmail());
+        loginDTO.setEmail(userFromDB.getEmail());
+        loginDTO.setId(userFromDB.getId());
+        loginDTO.setName(userFromDB.getName());
 
         loginResponse.setUser(loginDTO);
 
 
         //create access token
-        String access_token = this.securityUtil.createAccessToken(authentication, loginResponse.getUser());
+        String access_token = this.securityUtil.createAccessToken(authentication.getName(), loginResponse.getUser());
         loginResponse.setToken(access_token);
 
 
@@ -75,7 +76,6 @@ public class AuthenticationController {
         //update user
         this.userService.updateUserToken(refreshToken, loginRequest.getEmail());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -96,6 +96,8 @@ public class AuthenticationController {
                 .body(apiResponse);
 
     }
+
+
 
 
     @GetMapping("/auth/account")
@@ -125,5 +127,69 @@ public class AuthenticationController {
 
     }
 
+
+
+
+    @GetMapping("/auth/refresh")
+    public  ResponseEntity<ApiResponse> refreshToken(
+            @CookieValue(name="refreshToken", defaultValue = "anhTuDZ") String refreshToken
+    ) throws IdInvalidException{
+        if(refreshToken.equals("anhTuDZ")){
+            throw new IdInvalidException("Refresh Token is invalid");
+        }
+        //validation token
+        Jwt decodedToken = this.securityUtil.validateRefreshToken(refreshToken);
+        String email = decodedToken.getSubject();
+
+        //check user by RefreshToken and email
+        User userFromDB = this.userService.getUserByRefreshTokenAndEmail(refreshToken, email);
+
+        if(userFromDB == null){
+            throw new IdInvalidException("Invalid refresh token");
+        }
+
+        ApiResponse apiResponse = new ApiResponse();
+
+        LoginResponse loginResponse = new LoginResponse();
+        LoginDTO loginDTO = new LoginDTO();
+
+        loginDTO.setEmail(userFromDB.getEmail());
+        loginDTO.setId(userFromDB.getId());
+        loginDTO.setName(userFromDB.getName());
+
+        loginResponse.setUser(loginDTO);
+
+
+        //create access token
+        String access_token = this.securityUtil.createAccessToken(email, loginResponse.getUser());
+        loginResponse.setToken(access_token);
+
+
+        //create new refresh token
+        String newRefreshToken = this.securityUtil.createRefreshToken(email,loginResponse);
+        //update user
+        this.userService.updateUserToken(newRefreshToken, email);
+
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+        // set cookies
+        ResponseCookie responseCookie = ResponseCookie
+                .from("refreshToken", newRefreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(600)
+                .build();
+
+
+        apiResponse.setMessage("Successfully");
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setMetadata(loginResponse);
+
+        return  ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(apiResponse);
+    }
 
 }

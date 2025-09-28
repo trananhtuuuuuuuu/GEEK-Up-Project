@@ -23,6 +23,15 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
+    @ExceptionHandler(IdInvalidException.class)
+    public ResponseEntity<ExceptionResponse> handleIdException(IdInvalidException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setError("Invalid");
+        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        exceptionResponse.setMessege(e.getCause().getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+    }
+
 //    @ExceptionHandler(UserNotFoundException.class)
 //    public ResponseEntity<ExceptionResponse> handleUserNotFoundException(UserNotFoundException e) {
 //        ExceptionResponse  exceptionResponse = new ExceptionResponse();
