@@ -28,7 +28,16 @@ public class GlobalException {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setError("Invalid");
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        exceptionResponse.setMessege(e.getCause().getMessage());
+        exceptionResponse.setMessege(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(PermissionAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleIdException(PermissionAlreadyExistsException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setError("Invalid");
+        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        exceptionResponse.setMessege(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
