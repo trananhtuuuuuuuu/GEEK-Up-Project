@@ -26,7 +26,7 @@ public class UserDetailCustom implements UserDetailsService {
         com.example.technicalassessment.domain.User user = this.userService.getUserByEmail(username);
 
         Collection<GrantedAuthority> role =
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

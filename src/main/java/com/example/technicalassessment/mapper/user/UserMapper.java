@@ -2,7 +2,7 @@ package com.example.technicalassessment.mapper.user;
 
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
-import com.example.technicalassessment.request.RegistrationRequest;
+import com.example.technicalassessment.request.user.RegistrationRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,8 +34,8 @@ public class UserMapper {
                 registrationRequest.getDistrict(),
                 registrationRequest.getCommune(),
                 registrationRequest.getAddress(),
-                registrationRequest.getHousingType(),
-                registrationRequest.getRole()
+                registrationRequest.getHousingType()
+                //registrationRequest.getRole()
         );
     }
 
@@ -52,8 +52,8 @@ public class UserMapper {
                 user.getDistrict(),
                 user.getCommune(),
                 user.getAddress(),
-                user.getHousingType(),
-                user.getRole().name()
+                user.getHousingType()
+                //user.getRole().name()
         );
     }
 }

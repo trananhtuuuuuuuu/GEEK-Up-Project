@@ -20,5 +20,5 @@ public class UserDTO {
     private String commune;
     private String address;
     private String housingType;
-    private String role;
+    //private String role;
 }

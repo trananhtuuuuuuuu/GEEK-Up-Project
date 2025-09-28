@@ -28,5 +28,5 @@ public class UserResponse {
 
     private String housingType;
 
-    private String role;
+    //private String role;
 }

@@ -2,10 +2,9 @@ package com.example.technicalassessment.controller.user;
 
 
 import com.example.technicalassessment.Exception.IdInvalidException;
-import com.example.technicalassessment.Exception.UserNotFoundException;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.LoginDTO;
-import com.example.technicalassessment.request.LoginRequest;
+import com.example.technicalassessment.request.user.LoginRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.user.LoginResponse;
 import com.example.technicalassessment.service.user.UserService;
@@ -18,12 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Security;
 
 @RestController
 public class AuthenticationController {

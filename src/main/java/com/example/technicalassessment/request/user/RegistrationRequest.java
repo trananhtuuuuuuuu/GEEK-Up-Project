@@ -1,4 +1,4 @@
-package com.example.technicalassessment.request;
+package com.example.technicalassessment.request.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -46,5 +46,5 @@ public class RegistrationRequest {
     @NotBlank(message = "HousingType is required")
     private String housingType;
 
-    private String role;
+    //private String role;
 }

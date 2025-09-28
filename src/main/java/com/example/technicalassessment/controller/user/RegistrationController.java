@@ -1,10 +1,10 @@
 package com.example.technicalassessment.controller.user;
 
 
-import com.example.technicalassessment.domain.Role;
+//import com.example.technicalassessment.domain.Role;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
-import com.example.technicalassessment.request.RegistrationRequest;
+import com.example.technicalassessment.request.user.RegistrationRequest;
 import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.mapper.user.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
@@ -47,12 +47,12 @@ public class RegistrationController {
 
         User user = this.userMapper.toModel(userDTO);
 
-        if(registrationRequest.getRole() == null) {
-            user.setRole(Role.CUSTOMER);
-        }
-        else{
-            user.setRole(Role.valueOf(registrationRequest.getRole().toUpperCase()));
-        }
+//        if(registrationRequest.getRole() == null) {
+//            user.setRole(Role.CUSTOMER);
+//        }
+//        else{
+//            user.setRole(Role.valueOf(registrationRequest.getRole().toUpperCase()));
+//        }
 
         user = this.userService.registrationUser(user);
 
@@ -65,8 +65,8 @@ public class RegistrationController {
                 user.getDistrict(),
                 user.getCommune(),
                 user.getAddress(),
-                user.getHousingType(),
-                user.getRole().name()
+                user.getHousingType()
+                //user.getRole().name()
         );
 
         apiResponse.setStatus(HttpStatus.CREATED.value());
