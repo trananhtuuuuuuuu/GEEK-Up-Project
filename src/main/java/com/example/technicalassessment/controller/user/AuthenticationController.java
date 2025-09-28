@@ -1,12 +1,14 @@
 package com.example.technicalassessment.controller.user;
 
 
+import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.LoginDTO;
 import com.example.technicalassessment.request.LoginRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.user.LoginResponse;
 import com.example.technicalassessment.service.user.UserService;
 import com.example.technicalassessment.util.SecurityUtil;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -17,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Security;
 
 @RestController
 public class AuthenticationController {
@@ -39,7 +43,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         ApiResponse apiResponse = new ApiResponse();
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
@@ -47,11 +51,11 @@ public class AuthenticationController {
                         loginRequest.getPassword()
         );
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        //create access token
-        String access_token = this.securityUtil.createAccessToken(authentication);
+//        //create access token
+//        String access_token = this.securityUtil.createAccessToken(authentication);
 
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(access_token);
+        //loginResponse.setToken(access_token);
         LoginDTO loginDTO = new LoginDTO();
 
         loginDTO.setEmail(loginRequest.getEmail());
@@ -59,6 +63,13 @@ public class AuthenticationController {
         loginDTO.setName(this.userService.getUserByEmail(loginRequest.getEmail()).getName());
 
         loginResponse.setUser(loginDTO);
+
+
+        //create access token
+        String access_token = this.securityUtil.createAccessToken(authentication, loginResponse.getUser());
+        loginResponse.setToken(access_token);
+
+
         //create refresh token
         String refreshToken = this.securityUtil.createRefreshToken(loginRequest.getEmail(),loginResponse);
         //update user
@@ -88,7 +99,29 @@ public class AuthenticationController {
 
 
     @GetMapping("/auth/account")
-    public void getAccount(){
+    public ResponseEntity<ApiResponse> getAccount(){
+
+        ApiResponse apiResponse = new ApiResponse();
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+
+        LoginResponse loginResponse = new LoginResponse();
+        LoginDTO loginDTO = new LoginDTO();
+
+        User user = this.userService.getUserByEmail(email);
+
+        loginDTO.setEmail(email);
+        loginDTO.setId(user.getId());
+        loginDTO.setName(user.getName());
+
+        loginResponse.setUser(loginDTO);
+
+        apiResponse.setMessage("Successfully");
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setMetadata(loginResponse);
+
+        return ResponseEntity.ok().body(apiResponse);
 
     }
 
