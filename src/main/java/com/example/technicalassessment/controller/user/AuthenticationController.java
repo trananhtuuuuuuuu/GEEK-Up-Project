@@ -7,17 +7,16 @@ import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.user.LoginResponse;
 import com.example.technicalassessment.service.user.UserService;
 import com.example.technicalassessment.util.SecurityUtil;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationController {
@@ -48,6 +47,7 @@ public class AuthenticationController {
                         loginRequest.getPassword()
         );
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        //create access token
         String access_token = this.securityUtil.createAccessToken(authentication);
 
         LoginResponse loginResponse = new LoginResponse();
@@ -59,16 +59,38 @@ public class AuthenticationController {
         loginDTO.setName(this.userService.getUserByEmail(loginRequest.getEmail()).getName());
 
         loginResponse.setUser(loginDTO);
+        //create refresh token
         String refreshToken = this.securityUtil.createRefreshToken(loginRequest.getEmail(),loginResponse);
+        //update user
+        this.userService.updateUserToken(refreshToken, loginRequest.getEmail());
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setMetadata(loginResponse);
 
+        // set cookies
+        ResponseCookie responseCookie = ResponseCookie
+                .from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(600)
+                .build();
 
-        return  ResponseEntity.ok(apiResponse);
 
+        return  ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(apiResponse);
 
     }
+
+
+    @GetMapping("/auth/account")
+    public void getAccount(){
+
+    }
+
+
 }

@@ -37,7 +37,7 @@ public class Product {
 
     private int inventory;
 
-
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
 
 

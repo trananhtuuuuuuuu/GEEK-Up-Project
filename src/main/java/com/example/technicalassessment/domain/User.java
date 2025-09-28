@@ -31,6 +31,9 @@ public class User {
     private String address;
     private String housingType;
 
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String refreshToken;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
