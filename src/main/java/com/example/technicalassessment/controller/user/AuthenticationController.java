@@ -42,20 +42,16 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) {
         ApiResponse apiResponse = new ApiResponse();
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
                         loginRequest.getPassword()
         );
-
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        String access_token = this.securityUtil.createToken(authentication);
+        String access_token = this.securityUtil.createAccessToken(authentication);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(access_token);
-
         LoginDTO loginDTO = new LoginDTO();
 
         loginDTO.setEmail(loginRequest.getEmail());
@@ -63,12 +59,11 @@ public class AuthenticationController {
         loginDTO.setName(this.userService.getUserByEmail(loginRequest.getEmail()).getName());
 
         loginResponse.setUser(loginDTO);
-
+        String refreshToken = this.securityUtil.createRefreshToken(loginRequest.getEmail(),loginResponse);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.OK.value());
-        //apiResponse.setMetadata(loginRequest);
         apiResponse.setMetadata(loginResponse);
 
 
