@@ -5,6 +5,8 @@ import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -23,4 +25,10 @@ public class UserService {
                 () -> new UserNotFoundException("User with email " + email + " not found")
         );
     }
+
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+
 }
