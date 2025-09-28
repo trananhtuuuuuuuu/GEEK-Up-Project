@@ -1,8 +1,11 @@
 package com.example.technicalassessment.controller.user;
 
 
+import com.example.technicalassessment.dto.user.LoginDTO;
 import com.example.technicalassessment.request.LoginRequest;
 import com.example.technicalassessment.response.ApiResponse;
+import com.example.technicalassessment.response.user.LoginResponse;
+import com.example.technicalassessment.service.user.UserService;
 import com.example.technicalassessment.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +27,14 @@ public class AuthenticationController {
 
     private final SecurityUtil securityUtil;
 
+    private final UserService userService;
+
     public AuthenticationController(AuthenticationManagerBuilder authenticationManagerBuilder,
-                                    SecurityUtil securityUtil) {
+                                    SecurityUtil securityUtil,
+                                    UserService userService) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.securityUtil = securityUtil;
+        this.userService = userService;
     }
 
 
@@ -45,12 +52,24 @@ public class AuthenticationController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         String access_token = this.securityUtil.createToken(authentication);
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(access_token);
+
+        LoginDTO loginDTO = new LoginDTO();
+
+        loginDTO.setEmail(loginRequest.getEmail());
+        loginDTO.setId(this.userService.getUserByEmail(loginRequest.getEmail()).getId());
+        loginDTO.setName(this.userService.getUserByEmail(loginRequest.getEmail()).getName());
+
+        loginResponse.setUser(loginDTO);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         apiResponse.setMessage("Successfully");
-        apiResponse.setStatus(HttpStatus.ACCEPTED.value());
+        apiResponse.setStatus(HttpStatus.OK.value());
         //apiResponse.setMetadata(loginRequest);
-        apiResponse.setMetadata(access_token);
+        apiResponse.setMetadata(loginResponse);
 
 
         return  ResponseEntity.ok(apiResponse);
