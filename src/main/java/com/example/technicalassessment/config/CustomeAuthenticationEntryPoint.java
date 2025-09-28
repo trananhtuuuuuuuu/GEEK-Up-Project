@@ -13,6 +13,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Component("authenticationEntryPoint")
 public class CustomeAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -30,8 +31,16 @@ public class CustomeAuthenticationEntryPoint implements AuthenticationEntryPoint
         this.authenticationEntryPoint.commence(request, response, authException);
         response.setContentType("application/json");
         ExceptionResponse exceptionResponse = new ExceptionResponse();
-        exceptionResponse.setError(authException.getCause().getMessage());
+
         exceptionResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+        String errorMessage = Optional
+                .ofNullable(authException.getCause()) // null
+                .map(Throwable::getMessage)
+                .orElse(authException.getMessage());
+
+        exceptionResponse.setError(errorMessage);
+
         exceptionResponse.setMessege("Invalid Token");
 
         objectMapper.writeValue(response.getWriter(), exceptionResponse);

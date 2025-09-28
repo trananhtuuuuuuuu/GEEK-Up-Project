@@ -18,44 +18,5 @@ import java.util.List;
 @RestController
 public class HomeController {
 
-    private final UserService userService;
 
-    private final UserMapper userMapper;
-
-    public HomeController(UserService userService,
-                          UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<ApiResponse> home() {
-        ApiResponse apiResponse = new ApiResponse();
-        List<User> users = new ArrayList<>();
-
-        users = this.userService.getAllUsers();
-
-        List<UserResponse>  userResponses = new ArrayList<>();
-
-        for (User user : users) {
-            userResponses.add(new UserResponse(
-                    user.getName(),
-                    user.getEmail(),
-                    user.getGender(),
-                    user.getPhone(),
-                    user.getProvince(),
-                    user.getDistrict(),
-                    user.getCommune(),
-                    user.getAddress(),
-                    user.getHousingType(),
-                    user.getRole().name()
-            ));
-        }
-
-        apiResponse.setMessage("Successfully");
-        apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setMetadata(userResponses);
-
-        return ResponseEntity.ok(apiResponse);
-    }
 }
