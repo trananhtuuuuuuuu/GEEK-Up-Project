@@ -5,11 +5,14 @@ import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.Meta;
 import com.example.technicalassessment.dto.ResultPaginationDTO;
 import com.example.technicalassessment.repository.UserRepository;
+import com.example.technicalassessment.response.role.RoleResponse;
+import com.example.technicalassessment.response.user.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +25,7 @@ public class UserService {
     }
 
     public User registrationUser(User user) {
+
         return this.userRepository.save(user);
     }
 
@@ -45,6 +49,27 @@ public class UserService {
 
         resultPaginationDTO.setMeta(mt);
         resultPaginationDTO.setResult(users.getContent());
+
+
+        List<UserResponse> userResponseList = new ArrayList<>();
+        for (User user : users.getContent()) {
+            UserResponse userResponse = new UserResponse(
+                    user.getName(),
+                    user.getEmail(),
+                    user.getGender(),
+                    user.getPhone(),
+                    user.getProvince(),
+                    user.getDistrict(),
+                    user.getCommune(),
+                    user.getAddress(),
+                    user.getHousingType(),
+                    new RoleResponse(user.getRole().getId(),  user.getRole().getName())
+            );
+
+            userResponseList.add(userResponse);
+        }
+
+        resultPaginationDTO.setResult(userResponseList);
 
         return resultPaginationDTO;
     }

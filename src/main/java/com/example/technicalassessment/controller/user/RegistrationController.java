@@ -5,6 +5,7 @@ package com.example.technicalassessment.controller.user;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
 import com.example.technicalassessment.request.user.RegistrationRequest;
+import com.example.technicalassessment.response.role.RoleResponse;
 import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.mapper.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
@@ -65,8 +66,8 @@ public class RegistrationController {
                 user.getDistrict(),
                 user.getCommune(),
                 user.getAddress(),
-                user.getHousingType()
-                //user.getRole().name()
+                user.getHousingType(),
+                new RoleResponse(user.getRole().getId(), user.getRole().getName())
         );
 
         apiResponse.setStatus(HttpStatus.CREATED.value());

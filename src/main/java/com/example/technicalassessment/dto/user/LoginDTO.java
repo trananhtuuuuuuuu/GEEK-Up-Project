@@ -1,5 +1,7 @@
 package com.example.technicalassessment.dto.user;
 
+import com.example.technicalassessment.domain.Role;
+import com.example.technicalassessment.response.role.RoleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,8 @@ public class LoginDTO {
     private String email;
 
     private String name;
+
+    private Role role;
 
 
 //    private String gender;

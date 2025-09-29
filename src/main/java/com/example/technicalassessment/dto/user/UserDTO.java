@@ -1,5 +1,6 @@
 package com.example.technicalassessment.dto.user;
 
+import com.example.technicalassessment.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class UserDTO {
     private String commune;
     private String address;
     private String housingType;
+    private Role role;
     //private String role;
 }

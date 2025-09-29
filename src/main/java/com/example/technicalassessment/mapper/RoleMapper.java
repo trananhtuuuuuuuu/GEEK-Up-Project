@@ -75,7 +75,8 @@ public class RoleMapper {
     }
 
     public RoleResponse toResponse(RoleDTO dto) {
-        return new RoleResponse(dto.getId(), dto.getName(), dto.getDescription(), dto.isActive(), this.permissionMapper.toResponseList(dto.getPermissionDTOs()));
+        //return new RoleResponse(dto.getId(), dto.getName(), dto.getDescription(), dto.isActive(), this.permissionMapper.toResponseList(dto.getPermissionDTOs()));
+        return new RoleResponse(dto.getId(), dto.getName());
     }
 }
 

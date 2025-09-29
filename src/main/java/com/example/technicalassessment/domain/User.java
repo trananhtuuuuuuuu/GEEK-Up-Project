@@ -57,7 +57,8 @@ public class User {
                 String district,
                 String commune,
                 String address,
-                String housingType) {
+                String housingType,
+                Role role) {
         this.name  = name;
         this.email = email;
         this.password = password;
@@ -68,6 +69,6 @@ public class User {
         this.commune = commune;
         this.address = address;
         this.housingType = housingType;
-
+        this.role = role;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.technicalassessment.response.user;
 
+import com.example.technicalassessment.response.role.RoleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,8 @@ public class UserResponse {
     private String address;
 
     private String housingType;
+
+    private RoleResponse role;
 
     //private String role;
 }

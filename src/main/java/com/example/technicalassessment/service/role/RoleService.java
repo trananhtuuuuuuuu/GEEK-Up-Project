@@ -42,6 +42,13 @@ public class RoleService {
     }
 
 
+    public Role getRoleById(Long id) throws IdInvalidException {
+        return this.roleRepository.findById(id)
+                .orElseThrow(() -> new IdInvalidException("Role id not found"));
+    }
+
+
+
     public Role updateRole(Role role) throws IdInvalidException {
 
         Role roleFromDB = this.roleRepository.findById(role.getId()).orElseThrow(()->new IdInvalidException("Role id not found"));

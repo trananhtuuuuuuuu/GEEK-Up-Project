@@ -1,6 +1,8 @@
 package com.example.technicalassessment.util;
 
 
+import com.example.technicalassessment.dto.user.LoginDTO;
+import com.example.technicalassessment.dto.user.UserInsideToken;
 import com.example.technicalassessment.response.user.LoginResponse;
 import com.nimbusds.jose.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +40,15 @@ public class SecurityUtil {
 
 
 
-    public String createAccessToken(String email, Object loginResponse) {
+    public String createAccessToken(String email, Object loginResponse, LoginDTO loginDTO) {
+
+
+        UserInsideToken userToken = new UserInsideToken(
+                loginDTO.getId(),
+                loginDTO.getEmail(),
+                loginDTO.getName()
+        );
+
         Instant now = Instant.now();
         Instant validity = now.plus(this.accessTokenExpiration, ChronoUnit.SECONDS);
 
@@ -52,7 +62,7 @@ public class SecurityUtil {
                 .issuedAt(now)
                 .expiresAt(validity)
                 .subject(email)
-                .claim("user", loginResponse)
+                .claim("user", userToken)
                 .claim("permission", listAuthorities)
                 .build();
 
@@ -64,7 +74,15 @@ public class SecurityUtil {
 
 
 
-    public String createRefreshToken(String email, LoginResponse loginResponse) {
+    public String createRefreshToken(String email, LoginResponse loginResponse, LoginDTO loginDTO) {
+
+
+        UserInsideToken userToken = new UserInsideToken(
+                loginDTO.getId(),
+                loginDTO.getEmail(),
+                loginDTO.getName()
+        );
+
         Instant now = Instant.now();
         Instant validity = now.plus(this.refreshTokenExpiration, ChronoUnit.SECONDS);
 
@@ -74,7 +92,7 @@ public class SecurityUtil {
                 .issuedAt(now)
                 .expiresAt(validity)
                 .subject(email)
-                .claim("user", loginResponse.getUser())
+                .claim("user", userToken)
                 .build();
 
         JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();

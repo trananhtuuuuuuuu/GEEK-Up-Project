@@ -58,17 +58,18 @@ public class AuthenticationController {
         loginDTO.setEmail(userFromDB.getEmail());
         loginDTO.setId(userFromDB.getId());
         loginDTO.setName(userFromDB.getName());
+        loginDTO.setRole(userFromDB.getRole());
 
         loginResponse.setUser(loginDTO);
 
 
         //create access token
-        String access_token = this.securityUtil.createAccessToken(authentication.getName(), loginResponse.getUser());
-        loginResponse.setToken(access_token);
+        String access_token = this.securityUtil.createAccessToken(authentication.getName(), loginResponse, loginDTO);
+        loginResponse.setAccessToken(access_token);
 
 
         //create refresh token
-        String refreshToken = this.securityUtil.createRefreshToken(loginRequest.getEmail(),loginResponse);
+        String refreshToken = this.securityUtil.createRefreshToken(loginRequest.getEmail(),loginResponse, loginDTO);
         //update user
         this.userService.updateUserToken(refreshToken, loginRequest.getEmail());
 
@@ -112,8 +113,11 @@ public class AuthenticationController {
         loginDTO.setEmail(email);
         loginDTO.setId(user.getId());
         loginDTO.setName(user.getName());
+        loginDTO.setRole(user.getRole());
 
         loginResponse.setUser(loginDTO);
+
+        //loginResponse.setAccessToken()
 
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -152,17 +156,18 @@ public class AuthenticationController {
         loginDTO.setEmail(userFromDB.getEmail());
         loginDTO.setId(userFromDB.getId());
         loginDTO.setName(userFromDB.getName());
+        loginDTO.setRole(userFromDB.getRole());
 
         loginResponse.setUser(loginDTO);
 
 
         //create access token
-        String access_token = this.securityUtil.createAccessToken(email, loginResponse.getUser());
-        loginResponse.setToken(access_token);
+        String access_token = this.securityUtil.createAccessToken(email, loginResponse, loginDTO);
+        loginResponse.setAccessToken(access_token);
 
 
         //create new refresh token
-        String newRefreshToken = this.securityUtil.createRefreshToken(email,loginResponse);
+        String newRefreshToken = this.securityUtil.createRefreshToken(email,loginResponse, loginDTO);
         //update user
         this.userService.updateUserToken(newRefreshToken, email);
 
