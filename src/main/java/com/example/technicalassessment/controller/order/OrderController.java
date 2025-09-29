@@ -1,9 +1,8 @@
 package com.example.technicalassessment.controller.order;
 
 
-import com.example.technicalassessment.request.order.CreateOrder;
+import com.example.technicalassessment.request.order.CreateOrderRequest;
 import com.example.technicalassessment.response.ApiResponse;
-import com.example.technicalassessment.response.oder.OrderResponse;
 import com.example.technicalassessment.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +17,12 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("orders")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestBody CreateOrder createOrder){
+    public ResponseEntity<ApiResponse> placeOrder(@RequestBody CreateOrderRequest createOrderRequest){
 
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Successfully");
         apiResponse.setStatus(HttpStatus.CREATED.value());
-        apiResponse.setMetadata(this.orderService.placeOrder(createOrder));
+        apiResponse.setMetadata(this.orderService.placeOrder(createOrderRequest));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }

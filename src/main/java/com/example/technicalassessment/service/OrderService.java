@@ -8,19 +8,15 @@ import com.example.technicalassessment.mapper.OrderMapper;
 import com.example.technicalassessment.repository.OrderDetailRepository;
 import com.example.technicalassessment.repository.OrderRepository;
 import com.example.technicalassessment.repository.ProductRepository;
-import com.example.technicalassessment.repository.UserRepository;
-import com.example.technicalassessment.request.order.CreateOrder;
+import com.example.technicalassessment.request.order.CreateOrderRequest;
 
-import com.example.technicalassessment.request.product.ProductRequestOrder;
+import com.example.technicalassessment.request.product.ProductOrderRequest;
 import com.example.technicalassessment.response.oder.OrderResponse;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -39,21 +35,21 @@ public class OrderService {
     private final UserService userService;
 
 
-    public OrderResponse placeOrder(CreateOrder createOrder){
+    public OrderResponse placeOrder(CreateOrderRequest createOrderRequest){
         OrderResponse orderResponse = new OrderResponse();
 
 
-        List<Long> productIds = createOrder.getProductRequestOrders()
+        List<Long> productIds = createOrderRequest.getProductOrderRequests()
                 .stream()
-                .map(ProductRequestOrder::getProductId)
+                .map(ProductOrderRequest::getProductId)
                 .toList();
 
         List<Product> products = productRepository.findByIdIn(productIds);
 
 
-        Map<Long,Integer> map = createOrder.getProductRequestOrders()
+        Map<Long,Integer> map = createOrderRequest.getProductOrderRequests()
                 .stream()
-                .collect(Collectors.toMap(ProductRequestOrder::getProductId, ProductRequestOrder::getQuantity));
+                .collect(Collectors.toMap(ProductOrderRequest::getProductId, ProductOrderRequest::getQuantity));
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

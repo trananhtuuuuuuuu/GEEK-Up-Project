@@ -1,6 +1,6 @@
 package com.example.technicalassessment.request.order;
 
-import com.example.technicalassessment.request.product.ProductRequestOrder;
+import com.example.technicalassessment.request.product.ProductOrderRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrder {
-    private List<ProductRequestOrder> productRequestOrders;
+public class CreateOrderRequest {
+    private List<ProductOrderRequest> productOrderRequests;
 }
