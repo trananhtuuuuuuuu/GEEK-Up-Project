@@ -6,7 +6,7 @@ import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
 import com.example.technicalassessment.request.user.RegistrationRequest;
 import com.example.technicalassessment.response.user.UserResponse;
-import com.example.technicalassessment.mapper.user.UserMapper;
+import com.example.technicalassessment.mapper.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.service.user.UserService;
 import jakarta.validation.Valid;

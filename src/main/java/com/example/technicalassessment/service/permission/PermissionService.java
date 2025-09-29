@@ -23,13 +23,13 @@ public class PermissionService {
         return this.permissionRepository.save(permission);
     }
 
-    public Permission getPermissionById(Long id) {
+    public Permission getPermissionById(Long id) throws IdInvalidException {
         return  this.permissionRepository.findById(id).orElseThrow(
                 () -> new IdInvalidException("Permission id not found")
         );
     }
 
-    public Permission updatePermission(Long id, Permission permission) {
+    public Permission updatePermission(Long id, Permission permission) throws PermissionAlreadyExistsException {
 
         Permission permissionFromDB = getPermissionById(id);
 

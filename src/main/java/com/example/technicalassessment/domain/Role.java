@@ -2,7 +2,9 @@ package com.example.technicalassessment.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 @Table(name="roles")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -18,6 +22,16 @@ public class Role {
     private String name;
     private String description;
     private boolean active;
+
+    public Role(String name, String description, boolean active) {
+        this.name = name;
+        this.description = description;
+        this.active = active;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value={"roles"})

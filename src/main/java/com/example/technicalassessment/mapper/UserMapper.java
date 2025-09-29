@@ -1,4 +1,4 @@
-package com.example.technicalassessment.mapper.user;
+package com.example.technicalassessment.mapper;
 
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;

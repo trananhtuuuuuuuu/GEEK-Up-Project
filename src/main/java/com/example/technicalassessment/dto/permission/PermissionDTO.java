@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PermissionDTO {
+    private Long id;
     private String name;
     private String apiPath;
     private String method;

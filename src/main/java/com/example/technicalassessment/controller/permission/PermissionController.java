@@ -2,7 +2,7 @@ package com.example.technicalassessment.controller.permission;
 
 import com.example.technicalassessment.Exception.PermissionAlreadyExistsException;
 import com.example.technicalassessment.domain.Permission;
-import com.example.technicalassessment.mapper.permission.PermissionMapper;
+import com.example.technicalassessment.mapper.PermissionMapper;
 import com.example.technicalassessment.request.permission.PermissionRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.permission.PermissionResponse;

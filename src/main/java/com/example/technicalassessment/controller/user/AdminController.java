@@ -2,21 +2,14 @@ package com.example.technicalassessment.controller.user;
 
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.ResultPaginationDTO;
-import com.example.technicalassessment.mapper.user.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
-import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.service.user.UserService;
 import com.turkraft.springfilter.boot.Filter;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
