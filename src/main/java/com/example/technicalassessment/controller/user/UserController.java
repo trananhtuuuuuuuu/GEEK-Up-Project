@@ -3,7 +3,7 @@ package com.example.technicalassessment.controller.user;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.ResultPaginationDTO;
 import com.example.technicalassessment.response.ApiResponse;
-import com.example.technicalassessment.service.user.UserService;
+import com.example.technicalassessment.service.UserService;
 import com.turkraft.springfilter.boot.Filter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class UserController {
 
     private final UserService userService;
 
     //private final UserMapper userMapper;
 
-    public AdminController(UserService userService
+    public UserController(UserService userService
                          ) {
         this.userService = userService;
         //this.userMapper = userMapper;

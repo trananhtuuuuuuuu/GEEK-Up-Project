@@ -1,5 +1,7 @@
 package com.example.technicalassessment.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     //@JsonIgnore
+    @JsonManagedReference
     private List<Product> products;
 
     public Category(String name){

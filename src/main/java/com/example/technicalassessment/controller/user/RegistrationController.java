@@ -9,7 +9,7 @@ import com.example.technicalassessment.response.role.RoleResponse;
 import com.example.technicalassessment.response.user.UserResponse;
 import com.example.technicalassessment.mapper.UserMapper;
 import com.example.technicalassessment.response.ApiResponse;
-import com.example.technicalassessment.service.user.UserService;
+import com.example.technicalassessment.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

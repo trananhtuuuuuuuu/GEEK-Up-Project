@@ -8,7 +8,7 @@ import com.example.technicalassessment.request.role.RoleCreateRequest;
 import com.example.technicalassessment.request.role.RoleUpdateRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.role.RoleResponse;
-import com.example.technicalassessment.service.role.RoleService;
+import com.example.technicalassessment.service.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

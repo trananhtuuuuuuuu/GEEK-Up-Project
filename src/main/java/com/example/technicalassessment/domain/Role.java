@@ -34,7 +34,7 @@ public class Role {
         return active;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value={"roles"})
     @JoinTable(
             name="permission_role",

@@ -3,7 +3,7 @@ package com.example.technicalassessment.mapper;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
 import com.example.technicalassessment.request.user.RegistrationRequest;
-import com.example.technicalassessment.service.role.RoleService;
+import com.example.technicalassessment.service.RoleService;
 import org.springframework.stereotype.Component;
 
 @Component

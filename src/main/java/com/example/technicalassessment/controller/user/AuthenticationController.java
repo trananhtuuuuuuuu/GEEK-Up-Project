@@ -7,7 +7,7 @@ import com.example.technicalassessment.dto.user.LoginDTO;
 import com.example.technicalassessment.request.user.LoginRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.user.LoginResponse;
-import com.example.technicalassessment.service.user.UserService;
+import com.example.technicalassessment.service.UserService;
 import com.example.technicalassessment.util.SecurityUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;

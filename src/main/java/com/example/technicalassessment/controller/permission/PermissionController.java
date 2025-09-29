@@ -6,7 +6,7 @@ import com.example.technicalassessment.mapper.PermissionMapper;
 import com.example.technicalassessment.request.permission.PermissionRequest;
 import com.example.technicalassessment.response.ApiResponse;
 import com.example.technicalassessment.response.permission.PermissionResponse;
-import com.example.technicalassessment.service.permission.PermissionService;
+import com.example.technicalassessment.service.PermissionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
