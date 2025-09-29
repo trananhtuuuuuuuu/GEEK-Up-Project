@@ -1,5 +1,6 @@
 package com.example.technicalassessment.service;
 
+import com.example.technicalassessment.Exception.IdInvalidException;
 import com.example.technicalassessment.domain.Product;
 import com.example.technicalassessment.dto.Meta;
 import com.example.technicalassessment.dto.ResultPaginationDTO;
@@ -42,5 +43,18 @@ public class ProductService {
 
         return resultPaginationDTO;
     }
+
+
+//    public Product getProductById(Long id) throws IdInvalidException {
+//        Product product = new Product();
+//        if(this.productRepository.existsById(id)){
+//            product = this.productRepository.findById(id).orElseThrow(
+//                    () -> new IdInvalidException("Product with id " + id + " does not exist")
+//            );
+//        }
+//        else{
+//
+//        }
+//    }
 
 }

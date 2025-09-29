@@ -3,6 +3,7 @@ package com.example.technicalassessment.mapper;
 import com.example.technicalassessment.domain.User;
 import com.example.technicalassessment.dto.user.UserDTO;
 import com.example.technicalassessment.request.user.RegistrationRequest;
+import com.example.technicalassessment.response.oder.UserOrderResponse;
 import com.example.technicalassessment.service.RoleService;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +65,20 @@ public class UserMapper {
                 registrationRequest.getAddress(),
                 registrationRequest.getHousingType(),
                 this.roleService.getRoleById(registrationRequest.getRoleId())
+        );
+    }
+
+
+    public UserOrderResponse toUserOrderResponse(User user) {
+        return  new UserOrderResponse(
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getProvince(),
+                user.getDistrict(),
+                user.getCommune(),
+                user.getAddress(),
+                user.getHousingType()
         );
     }
 

@@ -45,4 +45,5 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name="producct_id")
     private Product product;
+
 }
