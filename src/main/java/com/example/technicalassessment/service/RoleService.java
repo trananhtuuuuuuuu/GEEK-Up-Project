@@ -1,4 +1,4 @@
-package com.example.technicalassessment.service.role;
+package com.example.technicalassessment.service;
 
 
 import com.example.technicalassessment.Exception.IdInvalidException;
@@ -9,7 +9,6 @@ import com.example.technicalassessment.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleService {

@@ -1,6 +1,5 @@
-package com.example.technicalassessment.service.user;
+package com.example.technicalassessment.service;
 
-import com.example.technicalassessment.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

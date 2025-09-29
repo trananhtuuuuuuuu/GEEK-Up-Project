@@ -1,4 +1,4 @@
-package com.example.technicalassessment.service.permission;
+package com.example.technicalassessment.service;
 
 import com.example.technicalassessment.Exception.IdInvalidException;
 import com.example.technicalassessment.Exception.PermissionAlreadyExistsException;

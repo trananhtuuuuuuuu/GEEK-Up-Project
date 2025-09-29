@@ -1,4 +1,4 @@
-package com.example.technicalassessment.service.user;
+package com.example.technicalassessment.service;
 
 import com.example.technicalassessment.Exception.UserNotFoundException;
 import com.example.technicalassessment.domain.User;
