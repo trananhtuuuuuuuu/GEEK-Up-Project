@@ -45,16 +45,10 @@ public class ProductService {
     }
 
 
-//    public Product getProductById(Long id) throws IdInvalidException {
-//        Product product = new Product();
-//        if(this.productRepository.existsById(id)){
-//            product = this.productRepository.findById(id).orElseThrow(
-//                    () -> new IdInvalidException("Product with id " + id + " does not exist")
-//            );
-//        }
-//        else{
-//
-//        }
-//    }
+    public Product getProductById(Long id) throws IdInvalidException {
+        return this.productRepository.findById(id).orElseThrow(
+                () -> new IdInvalidException("Product with id " + id + " does not exist")
+        );
+    }
 
 }
