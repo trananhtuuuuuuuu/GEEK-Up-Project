@@ -24,8 +24,6 @@ public class RoleService {
     }
 
 
-
-
     public Role createRole(Role role) throws IdInvalidException {
         if(this.roleRepository.existsByName(role.getName())){
             throw new IdInvalidException("Role name already exists");
@@ -41,6 +39,32 @@ public class RoleService {
         }
 
         return roleRepository.save(role);
+    }
+
+
+    public Role updateRole(Role role) throws IdInvalidException {
+
+        Role roleFromDB = this.roleRepository.findById(role.getId()).orElseThrow(()->new IdInvalidException("Role id not found"));
+
+        if(role.getPermissions() != null){
+            List<Long> requestPermissions = role.getPermissions()
+                    .stream().map(Permission::getId)
+                    .toList();
+
+            List<Permission> DBPermissions = this.permissionRepository.findByIdIn(requestPermissions);
+            role.setPermissions(DBPermissions);
+        }
+
+
+        assert roleFromDB != null;
+
+        roleFromDB.setName(role.getName());
+        roleFromDB.setDescription(role.getDescription());
+        roleFromDB.setActive(role.getActive());
+        roleFromDB.setPermissions(role.getPermissions());
+
+
+        return this.roleRepository.save(roleFromDB);
     }
 
 

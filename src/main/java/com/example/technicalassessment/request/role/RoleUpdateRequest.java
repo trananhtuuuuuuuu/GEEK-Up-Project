@@ -1,6 +1,7 @@
 package com.example.technicalassessment.request.role;
 
-import com.example.technicalassessment.request.permission.PermissionRequest;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,15 +11,26 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class RoleRequest {
+@AllArgsConstructor
+public class RoleUpdateRequest {
+
+
+    private Long id;
+
+    @NotBlank(message = "required")
     private String name;
+
+    @NotBlank(message = "required")
     private String description;
+
+
     private boolean active;
-    private List<Long> permissionsID;
 
     public boolean getActive() {
         return active;
     }
+
+    private List<Long> permissionsID;
+
 }

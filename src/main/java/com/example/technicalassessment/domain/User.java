@@ -37,6 +37,11 @@ public class User {
 //    @Enumerated(EnumType.STRING)
 //    private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+
     @OneToOne(mappedBy = "user")
     private Cart cart;
 

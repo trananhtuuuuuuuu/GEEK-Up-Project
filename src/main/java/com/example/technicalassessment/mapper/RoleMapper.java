@@ -4,7 +4,8 @@ import com.example.technicalassessment.Exception.IdInvalidException;
 import com.example.technicalassessment.domain.Permission;
 import com.example.technicalassessment.domain.Role;
 import com.example.technicalassessment.dto.role.RoleDTO;
-import com.example.technicalassessment.request.role.RoleRequest;
+import com.example.technicalassessment.request.role.RoleCreateRequest;
+import com.example.technicalassessment.request.role.RoleUpdateRequest;
 import com.example.technicalassessment.response.role.RoleResponse;
 import org.springframework.stereotype.Component;
 
@@ -19,14 +20,13 @@ public class RoleMapper {
         this.permissionMapper = permissionMapper;
     }
 
-    public Role toModel(RoleRequest roleRequest) throws IdInvalidException {
-        Role role = new Role();
-        role.setName(roleRequest.getName());
-        role.setDescription(roleRequest.getDescription());
-        role.setActive(roleRequest.getActive());
+    public Role toModel(RoleCreateRequest roleCreateRequest) throws IdInvalidException {
 
-        if (roleRequest.getPermissionsID() != null) {
-            List<Permission> perms = roleRequest.getPermissionsID()
+        Role role = new Role(roleCreateRequest.getName(), roleCreateRequest.getDescription(), roleCreateRequest.getActive());
+
+
+        if (roleCreateRequest.getPermissionsID() != null) {
+            List<Permission> perms = roleCreateRequest.getPermissionsID()
                     .stream()
                     .map(id -> {
                         Permission p = new Permission();
@@ -34,6 +34,34 @@ public class RoleMapper {
                         return p;
                     })
                     .toList();
+            role.setPermissions(perms);
+        }
+        else{
+            throw new IdInvalidException("Invalid Role ID");
+        }
+        return role;
+    }
+
+
+
+
+
+    public Role toModel(RoleUpdateRequest roleUpdateRequest) throws IdInvalidException {
+
+        Role role = new Role(roleUpdateRequest.getName(),  roleUpdateRequest.getDescription(), roleUpdateRequest.getActive());
+
+        role.setId(roleUpdateRequest.getId());
+
+        if (roleUpdateRequest.getPermissionsID() != null) {
+            List<Permission> perms = roleUpdateRequest.getPermissionsID()
+                    .stream()
+                    .map(id -> {
+                        Permission p = new Permission();
+                        p.setId(id);
+                        return p;
+                    })
+                    .toList();
+
             role.setPermissions(perms);
         }
         else{
