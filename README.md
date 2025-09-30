@@ -16,7 +16,8 @@ request -> controller (controller convert to DTO and then transit for service) -
     Shop: cho biết tên shop, địa chỉ nào bán item gì
 
 
-
+chưa xử lý exception trường hợp truyền discountID và productID không khớp (phải check sự tồn tại của cặp ID này)
+Tạo thêm payment cho project 
 
 USE `E-commerce-DB`;
 
@@ -40,7 +41,7 @@ select* from order_detail;
 
 select* from users where users.email="gu@gmail.com";
 
--- cau b
+-- cau c
 select
 year(order_sums.date_ordered) as order_year,
 month(order_sums.date_ordered) as order_month,

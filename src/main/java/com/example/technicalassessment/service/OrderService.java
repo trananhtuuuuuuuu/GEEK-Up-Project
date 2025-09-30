@@ -76,6 +76,9 @@ public class OrderService {
             orderDetail.setShop(product.getProductShops().getFirst().getShop());
             details.add(orderDetail);
 
+            int newInventory = product.getInventory() - quantity;
+            product.setInventory(newInventory);
+
         }
 
         order.setOrderDetails(details);
