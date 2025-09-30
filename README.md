@@ -1,84 +1,109 @@
-# GEEK-Up-Project
+
+# 🛒 E-Commerce Backend – Technical Assessment
 
 
-request -> controller (controller convert to DTO and then transit for service) -> before process at service layer (convert DTO -> Entity) -> process Entity at Service
 
 
-Đối tượng tham gia:
-    User: Admin, Customer (cần có permission)
-    Product: thông tin của item được chia theo category
-    Category: 
-    Order: Cho biết user nào order, id của order 
-    OrderDetail: thông tin order của từng item của user
-    Cart: Để cho biết tài khoản user đang dùng có bao nhiêu item trong giỏ hàng
-    CartDetail: show ra từng item chi tiết trong giỏ hàng
-    image: ảnh của item trong shop
-    Shop: cho biết tên shop, địa chỉ nào bán item gì
+8. Mô tả các bảng (Entities)
+
+Note: Xem EER Diagram ở file schema.png  
+
+1. users
+- Lưu thông tin người dùng đăng ký trên hệ thống.
+- Trường chính: id.
+- Các trường khác: name, email, phone, gender, province, district, commune, address, housing_type, password (mật khẩu đã băm), refresh_token, role_id (khoá ngoại tới roles).
+
+2. roles
+- Lưu vai trò của user.
+- Trường chính: id.
+- Các trường khác: name (tên role), description (mô tả quyền), active (trạng thái).
+- Một role có thể gán nhiều permission thông qua bảng permission_role.
+
+3. permissions
+- Lưu định nghĩa quyền truy cập API.
+- Trường chính: id.
+- Các trường khác: name (tên quyền), api_path (đường dẫn API), method (phương thức HTTP), module (module chức năng).
+- Quan hệ nhiều-nhiều với roles thông qua permission_role.
+
+4. permission_role
+- Bảng trung gian nối roles và permissions (quan hệ N:N).
+- Gồm role_id và permission_id.
+
+5. categories
+- Nhóm sản phẩm (ví dụ: shoes, pant, shirt, hat).
+- Trường chính: id.
+- Trường khác: name.
+
+6. products
+- Lưu thông tin sản phẩm.
+- Trường chính: id.
+- Các trường khác: name, brand, color, description, size, price, inventory, category_id (khoá ngoại tới categories).
+
+7. shop
+- Cửa hàng phân phối sản phẩm.
+- Trường chính: id.
+- Các trường khác: shop_name, shop_address, date_original (ngày thành lập).
+
+8. product_shop
+- Bảng trung gian quản lý tồn kho sản phẩm tại từng shop (quan hệ N:N giữa products và shop).
+- Trường chính: id.
+- Các trường khác: product_id, shop_id (khoá ngoại), quantity (số lượng tồn kho tại shop).
+
+9. orders
+- Lưu thông tin đơn hàng của user.
+- Trường chính: id.
+- Các trường khác: date_ordered (ngày đặt hàng), total_amount (tổng tiền), user_id (khoá ngoại tới users).
+
+10. order_detail
+- Chi tiết sản phẩm trong một đơn hàng.
+- Trường chính: id.
+- Các trường khác: order_id (khoá ngoại tới orders), producct_id (khoá ngoại tới products), shop_id (khoá ngoại tới shop), quantity, unit_price.
+
+11. carts
+- Lưu giỏ hàng tạm của user.
+- Trường chính: id.
+- Các trường khác: user_id (1 user có 1 cart), date_placed, total_amount.
+
+12. cart_detail
+- Chi tiết sản phẩm trong cart, tương tự order_detail.
+- Trường chính: id.
+- Các trường khác: cart_id (khoá ngoại tới carts), product_id (khoá ngoại), shop_id (khoá ngoại), quantity, unit_price, subtotal.
+
+13. discounts
+- Lưu khuyến mãi của sản phẩm.
+- Trường chính: id.
+- Các trường khác: percentage (phần trăm giảm), product_id (khoá ngoại tới products).
+
+14. image
+- Lưu file ảnh sản phẩm.
+- Trường chính: id.
+- Các trường khác: file_name, file_type, download_url, image (blob), product_id (khoá ngoại tới products).
+
+Quan hệ tổng thể:
+- Một User -> một Role -> nhiều Permission.
+- Một Category -> nhiều Product.
+- Một Product <-> nhiều Shop (qua ProductShop).
+- Một User -> nhiều Order -> nhiều OrderDetail.
+- Một User có 1 Cart -> nhiều CartDetail.
+- Một Product -> nhiều Discount & nhiều Image.
 
 
-chưa xử lý exception trường hợp truyền discountID và productID không khớp (phải check sự tồn tại của cặp ID này)
-Tạo thêm payment cho project 
 
-USE `E-commerce-DB`;
 
--- cau b
-set @user_id = (select id from users where email = 'gu@gmail.com');
-set @total = (select price * 5 from products where id = 1);
 
-insert into orders (date_ordered, total_amount, user_id)
-values (current_date(), @total, @user_id);
+## run project với Docker
 
-set @order_id = last_insert_id();
+- File SQL khởi tạo nằm trong `initDB/ecom-db.sql`.
 
-insert into order_detail (quantity, unit_price, order_id, shop_id, producct_id)
-select 5, price, @order_id, 2, id
-from products
-where id = 1;
+sudo docker compose up -d --build 
+sudo docker ps          
 
-select* from orders;
 
-select* from order_detail;
+import file GEEK Up.technical_assessment.json vào postman để test API 
 
-select* from users where users.email="gu@gmail.com";
+trừ /login và /registration endpoint thì tất cả API khác phải cần token để có thể call 
 
--- cau c
-select
-year(order_sums.date_ordered) as order_year,
-month(order_sums.date_ordered) as order_month,
-avg(order_sums.order_total) as avg_order_value
-from (
-select
-o.id as order_id,
-o.date_ordered,
-sum(od.quantity * od.unit_price) as order_total
-from orders o
-join order_detail od on o.id = od.order_id
-where year(o.date_ordered) = year(current_date)
-group by o.id, o.date_ordered
-) as order_sums
-group by order_year, order_month;
 
--- cau d
-with
-active_last_6m as (
-select distinct o.user_id
-from orders o
-where o.date_ordered >= current_date - interval 6 month
-),
-
-active_prev_6m as (
-select distinct o.user_id
-from orders o
-where o.date_ordered >= current_date - interval 12 month
-and o.date_ordered < current_date - interval 6 month
-)
-
-select
-count(distinct ap.user_id) as customers_in_prev_6m,
-count(distinct ap.user_id) - count(distinct al.user_id) as churned_customers,
-(count(distinct ap.user_id) - count(distinct al.user_id)) * 100.0 / count(distinct ap.user_id) as churn_rate_percent
-from active_prev_6m ap
-left join active_last_6m al on ap.user_id = al.user_id;
 
 
 

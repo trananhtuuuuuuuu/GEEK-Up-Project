@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "4b259ff9-a9a1-4bbe-91d2-d616c066b31a",
+		"name": "GEEK Up",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42107569"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Anh Tu\",\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456\",\n    \"gender\": \"male\",\n    \"phone\": \"0787549995\",\n    \"province\": \"HCM\",\n    \"district\": \"Q1\",\n    \"commune\": \"NTMK\",\n    \"address\": \"73 Tan Hoa 2\",\n    \"housingType\": \"nha rieng\",\n    \"roleId\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkyMTkwNzEsImlhdCI6MTc1OTEzMjY3MSwidXNlciI6eyJpZCI6MiwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.TersobzCH2WdZTukNdQUTZ631kc5lszJYjPkwOPAHF0bXLd-0K_4nhn7lsYqgmC4V0jp3vEBxRSwsQd__WtleA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/auth/account",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkyMTY4ODMsImlhdCI6MTc1OTEzMDQ4MywidXNlciI6eyJpZCI6MiwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.AN_uJ00DMdP3G4f73sVNyX1aUO2rv9QBaWXyj9_6crnshg7Tz2v885LTv6_z5bCc6vZGkoSLVsHyb6fCIpJTxA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@gmail.com\",\n    \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/users?page=1&size=5&sort=name,asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "name,asc"
+								},
+								{
+									"key": "filter",
+									"value": "email ~ '@gmail.com' and name ~ 'User'",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get new token refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/auth/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permission&Role",
+			"item": [
+				{
+					"name": "Permission",
+					"item": [
+						{
+							"name": "Create permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJwZXJtaXNzaW9uIjpbIlJPTEVfVVNFUl9DUkVBVEUiLCJST0xFX1VTRVJfVVBEQVRFIl0sImV4cCI6MTc1OTI4OTg0OCwiaWF0IjoxNzU5MjAzNDQ4LCJ1c2VyIjp7ImlkIjo0LCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIm5hbWUiOiJBbmggVHUifX0.Tm8p8M6OYBwQMl5sj_TAhFovk12ZYHSMFwvxJOBzushHJVczHuNhNMXj8CTzUIIJZMRM1jNrllBXJ5KuQwLEmA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Track Product\",\n    \"apiPath\": \"/admin/tracking\",\n    \"method\": \"GET\",\n    \"module\": \"PRODUCTS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/permissions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update permission",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkxNTk2NjQsImlhdCI6MTc1OTA3MzI2NCwidXNlciI6eyJpZCI6MSwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.lH-MCiJKvY0GjRy9OzA6iJluH-66S4QhgFNZYnXDbwi6U2F0mOswANNQH20LzN7RP4P4MVaIjNYDOp6N59Uxow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Create a User\",\n    \"apiPath\": \"/users\",\n    \"method\": \"POST\",\n    \"module\": \"USERS\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/permissions?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"permissions"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Create role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkyMjgxMDYsImlhdCI6MTc1OTE0MTcwNiwidXNlciI6eyJpZCI6MiwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.fjd1owP2tz5CTEtgfHGF_C5LFAeuO_xbr52OC-u9yxYT0aeACnT-4c0_spZnvIrw6po6zojRlokcBH5QYnIrpA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"AdmimAT\",\n    \"description\": \"Add and Update Discount\",\n    \"active\": true,\n    \"permissionsID\": [3, 4]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/roles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkyMTIyOTUsImlhdCI6MTc1OTEyNTg5NSwidXNlciI6eyJpZCI6MSwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.nrLMit0ZXj1jG9Emk9Vu9MBm6sKs3VwxcNWJ6fvoQlsdQwemT6bl9sOJa_h_ycLh3R_wLQNWDRhkUNYF_hEKHw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 4,\n    \"name\": \"AdminAT\",\n    \"description\": \"Add and Update Discount and tracking product\",\n    \"active\": true,\n    \"permissionsID\": [1, 2, 5]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/roles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"roles"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get All Products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndUBnbWFpbC5jb20iLCJwZXJtaXNzaW9uIjpbIlJPTEVfVVNFUl9DUkVBVEUiLCJST0xFX1VTRVJfVVBEQVRFIl0sImV4cCI6MTc1OTIzNjY3NywiaWF0IjoxNzU5MTUwMjc3LCJ1c2VyIjp7ImlkIjozLCJlbWFpbCI6Imd1QGdtYWlsLmNvbSIsIm5hbWUiOiJBc3Nlc3NtZW50In19.m7nO8-uHic3gz8FD3Xmvu_vAp3JVffFR8T3yM1e73LL5xjaWTcFfY9TQ43nWjYB2UuhbeSAd9ERr31bfXVlyRw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"gu@gmail.com\",\n    \"password\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/products?page=1&size=5&sort=name,asc&filter=category.name ~ 'hat'",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "name,asc"
+								},
+								{
+									"key": "filter",
+									"value": "category.name ~ 'hat'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Track products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJwZXJtaXNzaW9uIjpbIlJPTEVfVVNFUl9DUkVBVEUiLCJST0xFX1VTRVJfVVBEQVRFIl0sImV4cCI6MTc1OTI5MTY0NCwiaWF0IjoxNzU5MjA1MjQ0LCJ1c2VyIjp7ImlkIjo0LCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIm5hbWUiOiJBbmggVHUifX0.4AScFYGLPYdewrRMP_dRorF3aDKdzN0zYWc8T0mERQDoMiWPweEkl86zbba4Dhauw2Kk0o5ArKnIFVDy2oITgg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Track Product\",\n    \"apiPath\": \"/admin/tracking\",\n    \"method\": \"GET\",\n    \"module\": \"PRODUCTS\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/trackingProducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"trackingProducts"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "shopId",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Place an order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJndUBnbWFpbC5jb20iLCJwZXJtaXNzaW9uIjpbIlJPTEVfVVNFUl9DUkVBVEUiLCJST0xFX1VTRVJfVVBEQVRFIl0sImV4cCI6MTc1OTI0MzEwMCwiaWF0IjoxNzU5MTU2NzAwLCJ1c2VyIjp7ImlkIjozLCJlbWFpbCI6Imd1QGdtYWlsLmNvbSIsIm5hbWUiOiJBc3Nlc3NtZW50In19.SzbZoRXdn8THAIWDFJTzWBvFLhEE0KKZokK2AlP3P9Cb2mFycnhSE-HHxkPWvMD--c_HshktrafCiQVRtT9k5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productRequestOrders\": [\n    {\n      \"productId\": 8,\n      \"quantity\": 2\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Discount",
+			"item": [
+				{
+					"name": "Add Discount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYW5sYXBAZ21haWwuY29tIiwicGVybWlzc2lvbiI6WyJST0xFX1VTRVJfQ1JFQVRFIiwiUk9MRV9VU0VSX1VQREFURSJdLCJleHAiOjE3NTkyNDc4NzEsImlhdCI6MTc1OTE2MTQ3MSwidXNlciI6eyJpZCI6MiwiZW1haWwiOiJoYW5sYXBAZ21haWwuY29tIiwibmFtZSI6IkhhbiBMYXAifX0.xuf6_6SJSt47U1Vrz5eDYK_HFPkOzTPGuwKQ4_oRIlhZSEJaZmTxbWoHiUrGTeciIvG_nOKtbr19kq2P90kJoA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 9,\n    \"percentage\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/discounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"discounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Discount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJwZXJtaXNzaW9uIjpbIlJPTEVfVVNFUl9DUkVBVEUiLCJST0xFX1VTRVJfVVBEQVRFIl0sImV4cCI6MTc1OTI0Nzk0MywiaWF0IjoxNzU5MTYxNTQzLCJ1c2VyIjp7ImlkIjo0LCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIm5hbWUiOiJBbmggVHUifX0.p8-lK2lmyukMoKJ-u-FpuxTH1nj1XD_5QGarISYvxrtUGsSbrJUhYOoSn_sEsKvXRknNFh_uiUOS-yI08BymsA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"discountId\": 1,\n    \"productId\": 2,\n    \"percentage\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/discounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"discounts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
