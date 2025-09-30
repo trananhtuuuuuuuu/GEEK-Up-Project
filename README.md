@@ -3,10 +3,11 @@
 
 
 
-
 8. Mô tả các bảng (Entities)
 
 Note: Xem EER Diagram ở file schema.png  
+
+Các câu trả lời về query được viết trong Questions.txt file 
 
 1. users
 - Lưu thông tin người dùng đăng ký trên hệ thống.
